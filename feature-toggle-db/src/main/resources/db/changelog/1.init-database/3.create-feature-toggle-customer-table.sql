@@ -1,8 +1,16 @@
 CREATE TABLE IF NOT EXISTS FeatureToggleCustomer
 (
-    ID            varchar(36) PRIMARY KEY DEFAULT UUID(),
-    CustomerID    varchar(36) NOT NULL,
-    TechnicalName varchar(36) NOT NULL,
-    FOREIGN KEY (CustomerID) REFERENCES Customer (CustomerID),
-    FOREIGN KEY (TechnicalName) REFERENCES FeatureToggle (TechnicalName)
+    CustomerID    BIGINT       NOT NULL,
+    TechnicalName varchar(128) NOT NULL
 );
+
+ALTER TABLE FeatureToggleCustomer
+    ADD PRIMARY KEY (CustomerID, TechnicalName);
+
+ALTER TABLE FeatureToggleCustomer
+    ADD FOREIGN KEY (CustomerID)
+        REFERENCES Customer (CustomerID);
+
+ALTER TABLE FeatureToggleCustomer
+    ADD FOREIGN KEY (TechnicalName)
+        REFERENCES FeatureToggle (TechnicalName);

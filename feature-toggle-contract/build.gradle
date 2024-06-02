@@ -3,9 +3,5 @@ plugins {
 }
 
 dependencies {
-
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
+    implementation "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
 }

@@ -1,8 +1,13 @@
-CREATE TABLE IF NOT EXISTS FeatureToggle
+CREATE TABLE IF NOT EXISTS FeatureToggleRelease
 (
-    ID          varchar(36) PRIMARY KEY DEFAULT UUID(),
-    VersionName varchar(128) NOT NULL,
+    ID          varchar(36)  NOT NULL DEFAULT UUID() PRIMARY KEY,
+    Version     varchar(128) NOT NULL,
     Description varchar(256) NULL,
-    CreatedAt   timestamp    NOT NULL   DEFAULT NOW(),
-    INDEX (VersionName)
+    CreatedAt   timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP()
 );
+
+CREATE INDEX IF NOT EXISTS Version_index on FeatureToggleRelease (Version);
+
+ALTER TABLE FeatureToggle
+    ADD FOREIGN KEY (VersionID)
+        REFERENCES FeatureToggleRelease (ID);

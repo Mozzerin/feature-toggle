@@ -1,3 +1,7 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /feature-toggle
 spring:
   application:
     name: feature-toggle-web
@@ -8,10 +12,11 @@ spring:
     hikari:
       connectionTimeout: 20000
       maximumPoolSize: 5
-    url: jdbc:h2:mem:featuretoggle;mode=mysql;
+    url: jdbc:h2:file:./feature_toggle_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL;
     password: ${feature-toggle.database.password}
     username: ${feature-toggle.database.username}
     name: ${feature-toggle.database.name}
+    driverClassName: org.h2.Driver
   jpa:
     show-sql: true
     hibernate:
@@ -20,9 +25,12 @@ spring:
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
     enabled: true
+  h2:
+    console:
+      enabled: true
 feature-toggle:
   database:
     name: featuretoggle
     username: sa
-    password: password
     schema: dbo
+  maxArchiveSize: 200
