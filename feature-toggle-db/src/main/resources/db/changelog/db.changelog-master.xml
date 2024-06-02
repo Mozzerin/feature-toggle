@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="mozzerin" id="1" context="creation">
+        <comment>Create feature toggle table</comment>
+        <sqlFile path="1.init-database/1.create-feature-toggle-table.sql" relativeToChangelogFile="true" splitStatements="false"
+                 stripComments="true"/>
+    </changeSet>
+    <changeSet id="2" author="mozzerin" context="creation">
+        <comment>Create customer table</comment>
+        <sqlFile path="1.init-database/2.create-customer-table.sql" relativeToChangelogFile="true"
+                 splitStatements="false"
+                 stripComments="true"/>
+    </changeSet>
+    <changeSet id="3" author="mozzerin" context="creation">
+        <comment>Create many to many table</comment>
+        <sqlFile path="1.init-database/3.create-feature-toggle-customer-table.sql" relativeToChangelogFile="true"
+                 splitStatements="false"
+                 stripComments="true"/>
+    </changeSet>
+    <changeSet id="4" author="mozzerin" context="creation">
+        <comment>Create release table</comment>
+        <sqlFile path="1.init-database/4.create-versions-history-table.sql" relativeToChangelogFile="true"
+                 splitStatements="false"
+                 stripComments="true"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,8 @@
+rootProject.name = 'feature-toggle'
+
+include 'feature-toggle-db'
+include 'feature-toggle-contract'
+include 'feature-toggle-service'
+include 'feature-toggle-web'
+include 'feature-toggle-sdk'
+

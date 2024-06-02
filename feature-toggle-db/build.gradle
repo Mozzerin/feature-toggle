@@ -1,0 +1,9 @@
+plugins {
+    id 'org.liquibase.gradle' version "${liquiBasePluginVersion}"
+}
+dependencies {
+    implementation "org.liquibase:liquibase-core:${liquiBaseCoreVersion}"
+}
+jar {
+    enabled = true
+}

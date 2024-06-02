@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version "${springVersion}"
+    id 'io.spring.dependency-management' version "${springDependencyManagement}"
+}
+
+bootJar {
+    enabled = true
+}
+
+dependencies {
+    implementation project(':feature-toggle-db')
+    implementation project(':feature-toggle-contract')
+    implementation project(':feature-toggle-sdk')
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    implementation "com.h2database:h2:${h2Version}"
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
