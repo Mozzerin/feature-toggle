@@ -9,6 +9,7 @@ import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -56,8 +57,12 @@ public class FeatureToggleEntity {
     @Column(name = "ARCHIVED")
     private boolean archived;
 
-    @Column(name = "VERSIONID", length = 36)
-    private String versionId;
+    @ManyToOne(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    }, fetch = FetchType.LAZY)
+    @JoinColumn(name = "VERSIONID", referencedColumnName = "VERSIONNAME")
+    private FeatureToggleReleaseEntity featureToggleRelease;
 
     @Column(name = "CREATEDAT", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -100,17 +105,6 @@ public class FeatureToggleEntity {
     public void removeCustomer(CustomerEntity customerEntity) {
         this.customers.remove(customerEntity);
         customerEntity.getFeatureToggles().remove(this);
-    }
-
-    @Override public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        FeatureToggleEntity that = (FeatureToggleEntity) o;
-        return inverted == that.inverted && released == that.released && Objects.equals(id, that.id) && Objects.equals(displayName, that.displayName) && Objects.equals(
-                technicalName, that.technicalName) && Objects.equals(expiresOn, that.expiresOn) && Objects.equals(description, that.description) && Objects.equals(versionId,
-                that.versionId) && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt) && Objects.equals(customers, that.customers);
     }
 
     @Override public int hashCode() {
@@ -180,15 +174,6 @@ public class FeatureToggleEntity {
         return this;
     }
 
-    public String getVersionId() {
-        return versionId;
-    }
-
-    public FeatureToggleEntity setVersionId(String versionId) {
-        this.versionId = versionId;
-        return this;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -222,6 +207,27 @@ public class FeatureToggleEntity {
 
     public FeatureToggleEntity setCustomers(Set<CustomerEntity> customers) {
         this.customers = customers;
+        return this;
+    }
+
+    @Override public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        FeatureToggleEntity that = (FeatureToggleEntity) o;
+        return inverted == that.inverted && released == that.released && archived == that.archived && Objects.equals(id, that.id) && Objects.equals(displayName, that.displayName)
+                && Objects.equals(technicalName, that.technicalName) && Objects.equals(expiresOn, that.expiresOn) && Objects.equals(description, that.description)
+                && Objects.equals(featureToggleRelease, that.featureToggleRelease) && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt)
+                && Objects.equals(customers, that.customers);
+    }
+
+    public FeatureToggleReleaseEntity getFeatureToggleRelease() {
+        return featureToggleRelease;
+    }
+
+    public FeatureToggleEntity setFeatureToggleRelease(FeatureToggleReleaseEntity featureToggleRelease) {
+        this.featureToggleRelease = featureToggleRelease;
         return this;
     }
 }

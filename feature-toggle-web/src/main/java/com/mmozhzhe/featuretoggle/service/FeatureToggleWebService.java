@@ -64,8 +64,7 @@ public class FeatureToggleWebService {
         try {
             Set<FeatureToggleDto> toggleDtos = featureToggleServiceInterface.archive(featureToggleNames);
             return toggleDtos.stream().map(FeatureToggleWebService::toFeatureToggleWeb).collect(Collectors.toSet());
-        } catch (
-                FeatureToggleServiceException e) {
+        } catch (FeatureToggleServiceException e) {
             throw new FeatureToggleWebException(e.getMessage(), FEATURE_UPDATE_FAILED, e);
         }
     }

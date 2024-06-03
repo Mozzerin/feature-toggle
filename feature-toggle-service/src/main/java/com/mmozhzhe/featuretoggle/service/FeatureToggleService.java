@@ -41,7 +41,9 @@ public class FeatureToggleService implements FeatureToggleServiceInterface {
         }
     }
 
-    @Override public FeatureToggleDto updateFeatureToggle(FeatureToggleDto featureToggle) throws FeatureToggleServiceException {
+    @Override
+    @Transactional
+    public FeatureToggleDto updateFeatureToggle(FeatureToggleDto featureToggle) throws FeatureToggleServiceException {
         validate(featureToggle);
         try {
             FeatureToggleEntity featureToggleEntity = featureToggleRepository.findByTechnicalName(featureToggle.getTechnicalName())
@@ -55,7 +57,9 @@ public class FeatureToggleService implements FeatureToggleServiceInterface {
         }
     }
 
-    @Override public Set<FeatureToggleDto> archive(Set<String> featureToggleNames) throws FeatureToggleServiceException {
+    @Override
+    @Transactional
+    public Set<FeatureToggleDto> archive(Set<String> featureToggleNames) throws FeatureToggleServiceException {
         if (featureToggleNames == null || featureToggleNames.isEmpty()) {
             throw new FeatureToggleServiceException("List is empty");
         }
@@ -86,7 +90,6 @@ public class FeatureToggleService implements FeatureToggleServiceInterface {
                 .setDisplayName(featureToggle.getDisplayName())
                 .setTechnicalName(featureToggle.getTechnicalName() == null ? featureToggle.getDisplayName() : featureToggle.getTechnicalName())
                 .setReleased(featureToggle.isReleased())
-                .setVersionId(featureToggle.getVersionId())
                 .setExpiresOn(featureToggle.getExpiresOn())
                 .setInverted(featureToggle.isInverted());
 
@@ -106,7 +109,6 @@ public class FeatureToggleService implements FeatureToggleServiceInterface {
                 .setDisplayName(featureToggle.getDisplayName())
                 .setTechnicalName(featureToggle.getTechnicalName() == null ? featureToggle.getDisplayName() : featureToggle.getTechnicalName())
                 .setReleased(featureToggle.isReleased())
-                .setVersionId(featureToggle.getVersionId())
                 .setExpiresOn(featureToggle.getExpiresOn())
                 .setInverted(featureToggle.isInverted());
 
@@ -122,7 +124,6 @@ public class FeatureToggleService implements FeatureToggleServiceInterface {
                 .displayName(featureToggleEntity.getDisplayName())
                 .technicalName(featureToggleEntity.getTechnicalName())
                 .released(featureToggleEntity.isReleased())
-                .versionId(featureToggleEntity.getVersionId())
                 .expiresOn(featureToggleEntity.getExpiresOn())
                 .inverted(featureToggleEntity.isInverted())
                 .isArchived(featureToggleEntity.isArchived());

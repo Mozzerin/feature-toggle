@@ -34,3 +34,4 @@ feature-toggle:
     username: sa
     schema: dbo
   maxArchiveSize: 200
+  maxReleaseSize: 500

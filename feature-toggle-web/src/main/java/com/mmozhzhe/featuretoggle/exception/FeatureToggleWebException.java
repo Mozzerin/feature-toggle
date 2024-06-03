@@ -4,7 +4,7 @@ public class FeatureToggleWebException extends RuntimeException {
 
     private final String errorCode;
 
-    public FeatureToggleWebException(String message, String errorCode, FeatureToggleServiceException e) {
+    public FeatureToggleWebException(String message, String errorCode, Exception e) {
         super(message, e);
         this.errorCode = errorCode;
     }

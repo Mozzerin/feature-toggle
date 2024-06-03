@@ -42,6 +42,16 @@ Content-Type: application/json
   "m2mo1"
 ]
 
+### release
+PUT http://127.0.0.1:8080/feature-toggle/featuretoggle/release
+Content-Type: application/json
+
+{
+  "version_id": "v2",
+  "description": "best version",
+  "feature_toggle_names": [
+    "m2mo1"
+  ]
+}
+
 ###
-
-
