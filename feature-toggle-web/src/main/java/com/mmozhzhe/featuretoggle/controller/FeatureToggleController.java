@@ -2,6 +2,9 @@ package com.mmozhzhe.featuretoggle.controller;
 
 import com.mmozhzhe.featuretoggle.dto.FeatureToggleWeb;
 import com.mmozhzhe.featuretoggle.dto.ReleaseWeb;
+import com.mmozhzhe.featuretoggle.dto.SearchRequestWeb;
+import com.mmozhzhe.featuretoggle.dto.SearchResponseWeb;
+import com.mmozhzhe.featuretoggle.service.CustomerWebService;
 import com.mmozhzhe.featuretoggle.service.FeatureToggleWebService;
 import com.mmozhzhe.featuretoggle.service.ReleaseToggleWebService;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,11 +24,12 @@ import java.util.Set;
 @RestController
 @Validated
 @RequiredArgsConstructor
-@RequestMapping("/featuretoggle")
+@RequestMapping("/api/v1/features")
 @Slf4j
 public class FeatureToggleController {
 
     private final FeatureToggleWebService featureToggleService;
+    private final CustomerWebService customerWebService;
     private final ReleaseToggleWebService releaseWebService;
 
     @PostMapping
@@ -34,6 +37,13 @@ public class FeatureToggleController {
         log.info("New feature toggle save request received for feature toggle with name: {}", featureToggle.getTechnicalName());
         FeatureToggleWeb newFeatureToggle = featureToggleService.createNewFeatureToggle(featureToggle);
         return new ResponseEntity(newFeatureToggle, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/search")
+    public ResponseEntity<SearchResponseWeb> search(@RequestBody SearchRequestWeb searchRequest) {
+        log.info("Search features for customer: {}", searchRequest);
+        SearchResponseWeb result = customerWebService.search(searchRequest);
+        return new ResponseEntity(result, HttpStatus.CREATED);
     }
 
     @PutMapping(path = "/archive")

@@ -35,3 +35,4 @@ feature-toggle:
     schema: dbo
   maxArchiveSize: 200
   maxReleaseSize: 500
+  maxFeatureRequestSize: 300

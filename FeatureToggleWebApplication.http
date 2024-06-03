@@ -1,10 +1,10 @@
 ###create new feature toggle
-POST http://127.0.0.1:8080/feature-toggle/featuretoggle
+POST http://127.0.0.1:8080/feature-toggle/api/v1/features
 Content-Type: application/json
 
 {
   "display_name": "Example Display Name",
-  "technical_name": "m2mo1",
+  "technical_name": "m2mo2",
   "description": "This is an example description.",
   "expires_on": "2024-12-31T23:59:59",
   "inverted": true,
@@ -17,7 +17,7 @@ Content-Type: application/json
 
 ###update feature toggle
 @technicalName =m2mo1
-PUT http://localhost:8080/feature-toggle/featuretoggle/{{technicalName}}
+PUT http://localhost:8080/feature-toggle/api/v1/features/{{technicalName}}
 Content-Type: application/json
 
 {
@@ -35,7 +35,7 @@ Content-Type: application/json
 
 
 ### archive
-PUT http://127.0.0.1:8080/feature-toggle/featuretoggle/archive
+PUT http://127.0.0.1:8080/feature-toggle/api/v1/features/archive
 Content-Type: application/json
 
 [
@@ -43,7 +43,7 @@ Content-Type: application/json
 ]
 
 ### release
-PUT http://127.0.0.1:8080/feature-toggle/featuretoggle/release
+PUT http://127.0.0.1:8080/feature-toggle/api/v1/features/release
 Content-Type: application/json
 
 {
@@ -54,4 +54,18 @@ Content-Type: application/json
   ]
 }
 
+### search
+POST http://127.0.0.1:8080/feature-toggle/api/v1/features/search
+Content-Type: application/json
+
+{
+  "featureRequest": {
+    "customerId": "12",
+    "features": [
+      {
+        "name": "m2mo2"
+      }
+    ]
+  }
+}
 ###
