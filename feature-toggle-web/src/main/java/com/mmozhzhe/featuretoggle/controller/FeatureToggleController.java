@@ -1,6 +1,7 @@
 package com.mmozhzhe.featuretoggle.controller;
 
 import com.mmozhzhe.featuretoggle.dto.FeatureToggleWeb;
+import com.mmozhzhe.featuretoggle.dto.PaginationFeaturesWeb;
 import com.mmozhzhe.featuretoggle.dto.ReleaseWeb;
 import com.mmozhzhe.featuretoggle.dto.SearchRequestWeb;
 import com.mmozhzhe.featuretoggle.dto.SearchResponseWeb;
@@ -49,11 +50,11 @@ public class FeatureToggleController {
     }
 
     @GetMapping
-    public ResponseEntity<Set<FeatureToggleWeb>> findAllFeatures(
+    public ResponseEntity<PaginationFeaturesWeb> findAllFeatures(
             @RequestParam(defaultValue = "0") int pageNo,
             @RequestParam(defaultValue = "10") int pageSize) {
         log.info("Find all features");
-        Set<FeatureToggleWeb> result = featureToggleService.findAll(pageNo, pageSize);
+        PaginationFeaturesWeb result = featureToggleService.findAll(pageNo, pageSize);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 

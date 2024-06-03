@@ -5,6 +5,7 @@ import com.mmozhzhe.featuretoggle.dao.entity.CustomerEntity;
 import com.mmozhzhe.featuretoggle.dao.entity.FeatureToggleEntity;
 import com.mmozhzhe.featuretoggle.exception.FeatureToggleServiceException;
 import com.mmozhzhe.featuretoggle.model.FeatureToggleDto;
+import com.mmozhzhe.featuretoggle.model.PaginationFeatures;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -79,10 +80,15 @@ public class FeatureToggleService implements FeatureToggleServiceInterface {
         }
     }
 
-    @Override public Set<FeatureToggleDto> findAll(int pageNo, int pageSize) {
+    @Override public PaginationFeatures findAll(int pageNo, int pageSize) {
         PageRequest pageRequest = PageRequest.of(pageNo, pageSize);
-        Page<FeatureToggleEntity> set = featureToggleRepository.findAll(pageRequest);
-        return set.stream().map(FeatureToggleService::toFeatureToggleDto).collect(Collectors.toSet());
+        Page<FeatureToggleEntity> page = featureToggleRepository.findAll(pageRequest);
+        Set<FeatureToggleDto> featureToggleDtos = page.stream().map(FeatureToggleService::toFeatureToggleDto).collect(Collectors.toSet());
+        return PaginationFeatures.builder()
+                .featureToggles(featureToggleDtos)
+                .totalPages(page.getTotalPages())
+                .totalCount(page.getTotalElements())
+                .build();
     }
 
     private static void mergeToToggleEntity(FeatureToggleEntity featureToggleEntity, FeatureToggleDto featureToggle) {

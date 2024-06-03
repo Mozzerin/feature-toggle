@@ -1,9 +1,11 @@
 package com.mmozhzhe.featuretoggle.service;
 
 import com.mmozhzhe.featuretoggle.dto.FeatureToggleWeb;
+import com.mmozhzhe.featuretoggle.dto.PaginationFeaturesWeb;
 import com.mmozhzhe.featuretoggle.exception.FeatureToggleServiceException;
 import com.mmozhzhe.featuretoggle.exception.FeatureToggleWebException;
 import com.mmozhzhe.featuretoggle.model.FeatureToggleDto;
+import com.mmozhzhe.featuretoggle.model.PaginationFeatures;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -69,9 +71,17 @@ public class FeatureToggleWebService {
         }
     }
 
-    public Set<FeatureToggleWeb> findAll(int pageNo, int pageSize) {
-        Set<FeatureToggleDto> toggleDtos = featureToggleServiceInterface.findAll(pageNo, pageSize);
-        return toggleDtos.stream().map(FeatureToggleWebService::toFeatureToggleWeb).collect(Collectors.toSet());
+    public PaginationFeaturesWeb findAll(int pageNo, int pageSize) {
+        log.info("Find all Feature toggles with pageNo : {}, pageSize : {}", pageNo, pageSize);
+        PaginationFeatures page = featureToggleServiceInterface.findAll(pageNo, pageSize);
+        Set<FeatureToggleWeb> toggleWebs = page.getFeatureToggles().stream()
+                .map(FeatureToggleWebService::toFeatureToggleWeb)
+                .collect(Collectors.toSet());
+        return PaginationFeaturesWeb.builder()
+                .featureToggles(toggleWebs)
+                .totalCount(page.getTotalCount())
+                .totalPages(page.getTotalPages())
+                .build();
     }
 
     private static FeatureToggleDto toFeatureToggleDto(FeatureToggleWeb featureToggleWeb) {
