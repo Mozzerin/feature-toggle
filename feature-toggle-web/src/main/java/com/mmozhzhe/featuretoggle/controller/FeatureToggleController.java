@@ -42,11 +42,11 @@ public class FeatureToggleController {
         return new ResponseEntity(newFeatureToggle, HttpStatus.CREATED);
     }
 
-    @PostMapping("/search")
-    public ResponseEntity<SearchResponseWeb> search(@RequestBody SearchRequestWeb searchRequest) {
-        log.info("Search features for customer: {}", searchRequest);
-        SearchResponseWeb result = customerWebService.search(searchRequest);
-        return new ResponseEntity(result, HttpStatus.CREATED);
+    @PutMapping(value = "/{technicalName}")
+    public ResponseEntity<FeatureToggleWeb> updateFeatureToggle(@PathVariable(value = "technicalName") String technicalName, @RequestBody FeatureToggleWeb featureToggle) {
+        log.info("Update request received for feature toggle with name: {}", technicalName);
+        FeatureToggleWeb newFeatureToggle = featureToggleService.updateFeatureToggle(technicalName, featureToggle);
+        return new ResponseEntity(newFeatureToggle, HttpStatus.OK);
     }
 
     @GetMapping
@@ -58,31 +58,24 @@ public class FeatureToggleController {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
+    @GetMapping("/{technicalName}")
+    public ResponseEntity<FeatureToggleWeb> findById(@PathVariable(value = "technicalName") String technicalName) {
+        log.info("Find feature by id {}", technicalName);
+        FeatureToggleWeb result = featureToggleService.find(technicalName);
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/search")
+    public ResponseEntity<SearchResponseWeb> search(@RequestBody SearchRequestWeb searchRequest) {
+        log.info("Search features for customer: {}", searchRequest);
+        SearchResponseWeb result = customerWebService.search(searchRequest);
+        return new ResponseEntity(result, HttpStatus.CREATED);
+    }
+
     @PutMapping(path = "/archive")
     public ResponseEntity<FeatureToggleWeb> archive(@RequestBody Set<String> featureToggleNames) {
         log.info("Requested to archive those feature flags: {}", featureToggleNames);
         Set<FeatureToggleWeb> archivedList = featureToggleService.archive(featureToggleNames);
         return new ResponseEntity(archivedList, HttpStatus.OK);
-    }
-
-    @PutMapping(value = "/{technicalName}")
-    public ResponseEntity<FeatureToggleWeb> updateFeatureToggle(@PathVariable(value = "technicalName") String technicalName, @RequestBody FeatureToggleWeb featureToggle) {
-        log.info("Update request received for feature toggle with name: {}", technicalName);
-        FeatureToggleWeb newFeatureToggle = featureToggleService.updateFeatureToggle(technicalName, featureToggle);
-        return new ResponseEntity(newFeatureToggle, HttpStatus.OK);
-    }
-
-    @PutMapping(path = "/release")
-    public ResponseEntity<ReleaseWeb> release(@RequestBody ReleaseWeb releaseWeb) {
-        log.info("New release requested: {}", releaseWeb.getVersionId());
-        ReleaseWeb releaseList = releaseWebService.release(releaseWeb);
-        return new ResponseEntity(releaseList, HttpStatus.CREATED);
-    }
-
-    @PostMapping(path = "/release/search")
-    public ResponseEntity<Set<ReleaseWeb>> findAll(Set<String> technicalNames) {
-        log.info("Get release versions for toggles: {}", technicalNames);
-        Set<ReleaseWeb> releaseList = releaseWebService.getAllReleasesForName(technicalNames);
-        return new ResponseEntity(releaseList, HttpStatus.CREATED);
     }
 }

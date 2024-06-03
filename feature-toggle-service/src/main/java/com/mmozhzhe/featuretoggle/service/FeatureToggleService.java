@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -89,6 +90,12 @@ public class FeatureToggleService implements FeatureToggleServiceInterface {
                 .totalPages(page.getTotalPages())
                 .totalCount(page.getTotalElements())
                 .build();
+    }
+
+    @Override public FeatureToggleDto findById(String technicalName) throws FeatureToggleServiceException {
+        FeatureToggleEntity byTechnicalName = featureToggleRepository.findByTechnicalName(technicalName)
+                .orElseThrow(() -> new FeatureToggleServiceException("Feature not found"));
+        return toFeatureToggleDto(byTechnicalName);
     }
 
     private static void mergeToToggleEntity(FeatureToggleEntity featureToggleEntity, FeatureToggleDto featureToggle) {

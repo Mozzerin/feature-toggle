@@ -15,4 +15,6 @@ public interface FeatureToggleServiceInterface {
     Set<FeatureToggleDto> archive(Set<String> featureToggleNames) throws FeatureToggleServiceException;
 
     PaginationFeatures findAll(int pageNo, int pageSize);
+
+    FeatureToggleDto findById(String technicalName) throws FeatureToggleServiceException;
 }

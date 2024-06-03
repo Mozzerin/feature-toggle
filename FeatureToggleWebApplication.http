@@ -41,7 +41,7 @@ PUT http://127.0.0.1:8080/feature-toggle/api/v1/operations/features/archive
 Content-Type: application/json
 
 [
-  "m2mo1"
+  "m2mo2"
 ]
 
 ### release

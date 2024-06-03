@@ -9,5 +9,6 @@ public class ErrorCodes {
     public static final String RELEASE_FAILED = "RELEASE_FAILED";
     public static final String INVALID_SEARCH_REQUEST = "INVALID_SEARCH_REQUEST";
     public static final String SEARCH_REQUEST_FAILED = "SEARCH_REQUEST_FAILED";
+    public static final String NOT_FOUND = "NOT_FOUND";
 
 }

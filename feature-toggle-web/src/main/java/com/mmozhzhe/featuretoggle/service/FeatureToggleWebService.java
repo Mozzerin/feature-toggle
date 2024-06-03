@@ -17,6 +17,7 @@ import static com.mmozhzhe.featuretoggle.exception.ErrorCodes.FEATURE_CREATION_F
 import static com.mmozhzhe.featuretoggle.exception.ErrorCodes.FEATURE_UPDATE_FAILED;
 import static com.mmozhzhe.featuretoggle.exception.ErrorCodes.FEATURE_VALIDATION_NAMES_FAILED;
 import static com.mmozhzhe.featuretoggle.exception.ErrorCodes.INPUT_VALIDATION_FAILED;
+import static com.mmozhzhe.featuretoggle.exception.ErrorCodes.NOT_FOUND;
 
 @Service
 @Slf4j
@@ -82,6 +83,17 @@ public class FeatureToggleWebService {
                 .totalCount(page.getTotalCount())
                 .totalPages(page.getTotalPages())
                 .build();
+    }
+
+    public FeatureToggleWeb find(String technicalName) {
+        try {
+            log.info("Find Feature toggle with technical name {}", technicalName);
+            FeatureToggleDto featureToggleDto = null;
+            featureToggleDto = featureToggleServiceInterface.findById(technicalName);
+            return toFeatureToggleWeb(featureToggleDto);
+        } catch (FeatureToggleServiceException e) {
+            throw new FeatureToggleWebException(e.getMessage(), NOT_FOUND, e);
+        }
     }
 
     private static FeatureToggleDto toFeatureToggleDto(FeatureToggleWeb featureToggleWeb) {
