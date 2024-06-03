@@ -12,13 +12,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Set;
@@ -26,49 +24,19 @@ import java.util.Set;
 @RestController
 @Validated
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/features")
+@RequestMapping("/api/v1/operations/features")
 @Slf4j
-public class FeatureToggleController {
+public class OperationsController {
 
     private final FeatureToggleWebService featureToggleService;
     private final CustomerWebService customerWebService;
     private final ReleaseToggleWebService releaseWebService;
-
-    @PostMapping
-    public ResponseEntity<FeatureToggleWeb> saveFeatureToggle(@RequestBody FeatureToggleWeb featureToggle) {
-        log.info("New feature toggle save request received for feature toggle with name: {}", featureToggle.getTechnicalName());
-        FeatureToggleWeb newFeatureToggle = featureToggleService.createNewFeatureToggle(featureToggle);
-        return new ResponseEntity(newFeatureToggle, HttpStatus.CREATED);
-    }
-
-    @PostMapping("/search")
-    public ResponseEntity<SearchResponseWeb> search(@RequestBody SearchRequestWeb searchRequest) {
-        log.info("Search features for customer: {}", searchRequest);
-        SearchResponseWeb result = customerWebService.search(searchRequest);
-        return new ResponseEntity(result, HttpStatus.CREATED);
-    }
-
-    @GetMapping
-    public ResponseEntity<Set<FeatureToggleWeb>> findAllFeatures(
-            @RequestParam(defaultValue = "0") int pageNo,
-            @RequestParam(defaultValue = "10") int pageSize) {
-        log.info("Find all features");
-        Set<FeatureToggleWeb> result = featureToggleService.findAll(pageNo, pageSize);
-        return new ResponseEntity(result, HttpStatus.OK);
-    }
 
     @PutMapping(path = "/archive")
     public ResponseEntity<FeatureToggleWeb> archive(@RequestBody Set<String> featureToggleNames) {
         log.info("Requested to archive those feature flags: {}", featureToggleNames);
         Set<FeatureToggleWeb> archivedList = featureToggleService.archive(featureToggleNames);
         return new ResponseEntity(archivedList, HttpStatus.OK);
-    }
-
-    @PutMapping(value = "/{technicalName}")
-    public ResponseEntity<FeatureToggleWeb> updateFeatureToggle(@PathVariable(value = "technicalName") String technicalName, @RequestBody FeatureToggleWeb featureToggle) {
-        log.info("Update request received for feature toggle with name: {}", technicalName);
-        FeatureToggleWeb newFeatureToggle = featureToggleService.updateFeatureToggle(technicalName, featureToggle);
-        return new ResponseEntity(newFeatureToggle, HttpStatus.OK);
     }
 
     @PutMapping(path = "/release")

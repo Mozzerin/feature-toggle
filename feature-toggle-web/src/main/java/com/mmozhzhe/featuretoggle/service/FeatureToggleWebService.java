@@ -69,6 +69,11 @@ public class FeatureToggleWebService {
         }
     }
 
+    public Set<FeatureToggleWeb> findAll(int pageNo, int pageSize) {
+        Set<FeatureToggleDto> toggleDtos = featureToggleServiceInterface.findAll(pageNo, pageSize);
+        return toggleDtos.stream().map(FeatureToggleWebService::toFeatureToggleWeb).collect(Collectors.toSet());
+    }
+
     private static FeatureToggleDto toFeatureToggleDto(FeatureToggleWeb featureToggleWeb) {
         return FeatureToggleDto.builder()
                 .description(featureToggleWeb.getDescription())
@@ -96,5 +101,4 @@ public class FeatureToggleWebService {
                 .isArchived(featureToggleDto.isArchived())
                 .build();
     }
-
 }

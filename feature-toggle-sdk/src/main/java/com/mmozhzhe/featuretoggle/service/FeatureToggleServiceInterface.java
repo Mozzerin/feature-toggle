@@ -12,4 +12,6 @@ public interface FeatureToggleServiceInterface {
     FeatureToggleDto updateFeatureToggle(FeatureToggleDto featureToggleDto) throws FeatureToggleServiceException;
 
     Set<FeatureToggleDto> archive(Set<String> featureToggleNames) throws FeatureToggleServiceException;
+
+    Set<FeatureToggleDto> findAll(int pageNo, int pageSize);
 }

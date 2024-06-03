@@ -4,14 +4,16 @@ Content-Type: application/json
 
 {
   "display_name": "Example Display Name",
-  "technical_name": "m2mo2",
+  "technical_name": "m2mo3",
   "description": "This is an example description.",
   "expires_on": "2024-12-31T23:59:59",
   "inverted": true,
   "customer_ids": [
     12,
     13,
-    15
+    11,
+    19,
+    16
   ]
 }
 
@@ -35,7 +37,7 @@ Content-Type: application/json
 
 
 ### archive
-PUT http://127.0.0.1:8080/feature-toggle/api/v1/features/archive
+PUT http://127.0.0.1:8080/feature-toggle/api/v1/operations/features/archive
 Content-Type: application/json
 
 [
@@ -43,7 +45,7 @@ Content-Type: application/json
 ]
 
 ### release
-PUT http://127.0.0.1:8080/feature-toggle/api/v1/features/release
+PUT http://127.0.0.1:8080/feature-toggle/api/v1/operations/features/release
 Content-Type: application/json
 
 {
@@ -68,4 +70,8 @@ Content-Type: application/json
     ]
   }
 }
-###
+
+### find all
+GET http://localhost:8080/feature-toggle/api/v1/features?pageNo=0&pageSize=10
+
+Content-Type: application/json

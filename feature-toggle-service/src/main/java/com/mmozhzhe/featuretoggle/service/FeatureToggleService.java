@@ -7,6 +7,8 @@ import com.mmozhzhe.featuretoggle.exception.FeatureToggleServiceException;
 import com.mmozhzhe.featuretoggle.model.FeatureToggleDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,6 +77,12 @@ public class FeatureToggleService implements FeatureToggleServiceInterface {
         } catch (Exception e) {
             throw new FeatureToggleServiceException("Update for new feature toggle failed", e);
         }
+    }
+
+    @Override public Set<FeatureToggleDto> findAll(int pageNo, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNo, pageSize);
+        Page<FeatureToggleEntity> set = featureToggleRepository.findAll(pageRequest);
+        return set.stream().map(FeatureToggleService::toFeatureToggleDto).collect(Collectors.toSet());
     }
 
     private static void mergeToToggleEntity(FeatureToggleEntity featureToggleEntity, FeatureToggleDto featureToggle) {
