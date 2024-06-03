@@ -147,6 +147,7 @@ public class FeatureToggleService implements FeatureToggleServiceInterface {
                 .released(featureToggleEntity.isReleased())
                 .expiresOn(featureToggleEntity.getExpiresOn())
                 .inverted(featureToggleEntity.isInverted())
+                .versionId(featureToggleEntity.getFeatureToggleRelease() == null ? null : featureToggleEntity.getFeatureToggleRelease().getVersionName())
                 .isArchived(featureToggleEntity.isArchived());
         if (featureToggleEntity.getCustomers() != null && !featureToggleEntity.getCustomers().isEmpty()) {
             Set<Long> customerIds = featureToggleEntity.getCustomers().stream()

@@ -8,3 +8,9 @@ export interface FeatureToggle {
     archived: boolean;
     customer_ids: string[];
 }
+
+export interface Release {
+    version_id: string,
+    description: string,
+    feature_toggle_names: string[]
+}

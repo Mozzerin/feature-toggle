@@ -52,11 +52,12 @@ public class ReleaseToggleService implements ReleaseToggleServiceInterface {
                     .description(releaseDto.getDescription())
                     .versionName(releaseDto.getVersionId())
                     .build();
-            toggleEntities.stream()
+            Set<FeatureToggleEntity> entities = toggleEntities.stream()
                     .filter(featureToggleEntity -> !featureToggleEntity.isArchived())
-                    .peek(featureToggleEntity -> featureToggleEntity.setReleased(true))
-                    .forEach(featureToggleEntity -> featureToggleEntity.setFeatureToggleRelease(releaseEntity));
-            featureToggleRepository.saveAll(toggleEntities);
+                    .map(featureToggleEntity -> featureToggleEntity.setReleased(true))
+                    .map(featureToggleEntity -> featureToggleEntity.setFeatureToggleRelease(releaseEntity))
+                    .collect(Collectors.toSet());
+            featureToggleRepository.saveAll(entities);
             return releaseDto;
         } catch (Exception e) {
             throw new ReleaseToggleServiceException("Update for new feature toggle failed", e);

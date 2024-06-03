@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {Button, ButtonGroup, Container, Table} from "reactstrap";
 import AppNavbar from '../../component/AppNavbar';
 import {FeatureToggle} from "../../types/types";
+import {ADMIN_ROLE, ROLE_HEADER} from "../../types/conts";
 
 interface FeatureListState {
     featureToggles: FeatureToggle[];
@@ -39,6 +40,20 @@ class FeatureList extends Component<{}, FeatureListState> {
         });
     }
 
+    async release(technicalName: string) {
+        await fetch(`/api/v1/operations/features/release`, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(new Array(technicalName))
+        }).then(() => {
+            let updatedToggles = this.state.featureToggles.filter(i => i.technical_name !== technicalName);
+            this.setState({featureToggles: updatedToggles});
+        });
+    }
+
     render() {
         const {featureToggles, isLoading} = this.state;
 
@@ -49,6 +64,7 @@ class FeatureList extends Component<{}, FeatureListState> {
         const featureToggleList = featureToggles.map(featureToggle => (
             <tr key={featureToggle.technical_name}>
                 <td>{featureToggle.display_name}</td>
+                {localStorage.getItem(ROLE_HEADER) === ADMIN_ROLE && <td>{featureToggle.technical_name}</td>}
                 <td>{featureToggle.description}</td>
                 <td>{featureToggle.expires_on}</td>
                 <td>{featureToggle.inverted ? 'True' : 'False'}</td>
@@ -78,6 +94,10 @@ class FeatureList extends Component<{}, FeatureListState> {
                         <thead>
                         <tr>
                             <th style={{width: "10%"}}>Display name</th>
+                            {
+                                localStorage.getItem(ROLE_HEADER) === ADMIN_ROLE
+                                && <th style={{width: "10%"}}>Technical name</th>
+                            }
                             <th style={{width: "10%"}}>Description</th>
                             <th style={{width: "10%"}}>Expiration time</th>
                             <th style={{width: "10%"}}>Inverted</th>
