@@ -1,0 +1,20 @@
+{
+  "name": "feature-toggle",
+  "version": "1.0.0",
+  "scripts": {
+    "build:backend": "cd feature-toggle-web && ./gradlew clean build",
+    "build:frontend": "cd feature-toggle-front && npm install && npm run build",
+    "build": "npm run build:backend && npm run build:frontend",
+    "start:backend": "export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home && java -jar feature-toggle-web/build/libs/feature-toggle-web-1.0.0-SNAPSHOT.jar",
+    "start:frontend": "cd app-frontend &&  npm run start",
+    "start": "npm run start:backend & npm run start:frontend",
+    "test": "cypress run"
+  },
+  "dependencies": {
+    "-": "^0.0.1",
+    "save-dev": "^0.0.1-security",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
+  }
+}

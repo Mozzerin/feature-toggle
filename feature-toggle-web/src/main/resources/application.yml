@@ -32,6 +32,7 @@ feature-toggle:
   database:
     name: featuretoggle
     username: sa
+    password: password
     schema: dbo
   maxArchiveSize: 200
   maxReleaseSize: 500
