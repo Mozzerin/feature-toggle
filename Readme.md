@@ -9,6 +9,7 @@ Service to store and process feature flags storing and managing with UI and rest
 - Search feature toggles by customer
 - You cannot use "new" as technical name for feature toggle
 - Archived toggles are available only for role admin
+- Search api exposed: POST http://127.0.0.1:8080/feature-toggle/api/v1/features/search
 
 
 ## Tips
@@ -35,16 +36,18 @@ It will open react ui on 3000 port and backend on 8080 on localhost
 
 ## To be done
 FE:
-2. oauth 2.0
+1. oauth
 2. Add redux to frontend to avoid extra calls
 3. Test coverage for frontend
 4. Batch updates on frontend
 5. Add search by customer to frontend
-7. Error handling on UI
+7. Error handling on UI + form validation
 8. Switch to UUID as identifier of feature
 8. Refactor 
 
 BE: 
 1. Create separate service from module "feature-toggle-service"
 2. Improve test coverage
-3. oauth 2.0
+3. oauth
+4. Validation input
+5. Move api endpoints to "backend service"
