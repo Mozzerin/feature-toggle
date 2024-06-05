@@ -27,7 +27,6 @@ import java.util.Set;
 public class OperationsController {
 
     private final FeatureToggleWebService featureToggleService;
-    private final CustomerWebService customerWebService;
     private final ReleaseToggleWebService releaseWebService;
 
     @PutMapping(path = "/archive")
@@ -38,7 +37,7 @@ public class OperationsController {
     }
 
     @PostMapping(path = "/release")
-    public ResponseEntity<ReleaseWeb> release(@RequestBody ReleaseWeb releaseWeb, @RequestHeader(name = "Role") String role) {
+    public ResponseEntity<ReleaseWeb> release(@RequestBody ReleaseWeb releaseWeb, @RequestHeader(name = "Role", required = false) String role) {
         if ("admin".equals(role)) {
             log.info("New release requested: {}", releaseWeb.getVersionId());
             ReleaseWeb releaseList = releaseWebService.release(releaseWeb);

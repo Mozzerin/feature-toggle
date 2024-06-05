@@ -10,6 +10,7 @@ import com.mmozhzhe.featuretoggle.model.SearchResponseDtoBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -28,7 +29,9 @@ public class CustomerService implements CustomerServiceInterface {
         this.customerRepository = customerRepository;
     }
 
-    @Override public SearchResponseDto search(SearchRequestDto searchRequestDto) throws CustomerServiceException {
+    @Override
+    @Transactional
+    public SearchResponseDto search(SearchRequestDto searchRequestDto) throws CustomerServiceException {
         validate(searchRequestDto);
         SearchRequestDtoBody featureRequest = searchRequestDto.getFeatureRequest();
         Set<String> set = featureRequest.getFeatures().stream().map(x -> x.getFeatureName()).collect(Collectors.toSet());

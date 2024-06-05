@@ -2,12 +2,10 @@ package com.mmozhzhe.featuretoggle.controller;
 
 import com.mmozhzhe.featuretoggle.dto.FeatureToggleWeb;
 import com.mmozhzhe.featuretoggle.dto.PaginationFeaturesWeb;
-import com.mmozhzhe.featuretoggle.dto.ReleaseWeb;
 import com.mmozhzhe.featuretoggle.dto.SearchRequestWeb;
 import com.mmozhzhe.featuretoggle.dto.SearchResponseWeb;
 import com.mmozhzhe.featuretoggle.service.CustomerWebService;
 import com.mmozhzhe.featuretoggle.service.FeatureToggleWebService;
-import com.mmozhzhe.featuretoggle.service.ReleaseToggleWebService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -33,7 +31,6 @@ public class FeatureToggleController {
 
     private final FeatureToggleWebService featureToggleService;
     private final CustomerWebService customerWebService;
-    private final ReleaseToggleWebService releaseWebService;
 
     @PostMapping
     public ResponseEntity<FeatureToggleWeb> saveFeatureToggle(@RequestBody FeatureToggleWeb featureToggle) {

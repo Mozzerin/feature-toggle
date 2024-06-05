@@ -21,12 +21,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-//    "start": "react-scripts start; export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home && cd ../feature-toggle-web && ../gradlew bootRun",
-//    "build": "react-scripts build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "start": "webpack serve - mode development - open",
-    "build": "webpack - mode production"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

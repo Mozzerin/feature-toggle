@@ -20,12 +20,12 @@ import static com.mmozhzhe.featuretoggle.exception.ErrorCodes.RELEASE_FAILED;
 @Slf4j
 public class ReleaseToggleWebService {
 
-    @Value("${feature-toggle.maxReleaseSize}")
-    private Integer maxReleaseSize;
+    private final Integer maxReleaseSize;
 
     private final ReleaseToggleServiceInterface releaseToggleServiceInterface;
 
-    public ReleaseToggleWebService(ReleaseToggleServiceInterface releaseToggleServiceInterface) {
+    public ReleaseToggleWebService(ReleaseToggleServiceInterface releaseToggleServiceInterface, @Value("${feature-toggle.maxReleaseSize}") Integer maxReleaseSize) {
+        this.maxReleaseSize = maxReleaseSize;
         this.releaseToggleServiceInterface = releaseToggleServiceInterface;
     }
 

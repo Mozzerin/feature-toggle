@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,12 +21,12 @@ import java.util.stream.Collectors;
 @Slf4j
 public class FeatureToggleService implements FeatureToggleServiceInterface {
 
-    @Value("${feature-toggle.maxArchiveSize}")
-    private Integer maxArchiveSize;
+    private final Integer maxArchiveSize;
 
     private final FeatureToggleRepository featureToggleRepository;
 
-    public FeatureToggleService(FeatureToggleRepository featureToggleRepository) {
+    public FeatureToggleService(FeatureToggleRepository featureToggleRepository, @Value("${feature-toggle.maxArchiveSize}") Integer maxArchiveSize) {
+        this.maxArchiveSize = maxArchiveSize;
         this.featureToggleRepository = featureToggleRepository;
     }
 
@@ -81,7 +80,9 @@ public class FeatureToggleService implements FeatureToggleServiceInterface {
         }
     }
 
-    @Override public PaginationFeatures findAll(int pageNo, int pageSize) {
+    @Override
+    @Transactional
+    public PaginationFeatures findAll(int pageNo, int pageSize) {
         PageRequest pageRequest = PageRequest.of(pageNo, pageSize);
         Page<FeatureToggleEntity> page = featureToggleRepository.findAll(pageRequest);
         Set<FeatureToggleDto> featureToggleDtos = page.stream().map(FeatureToggleService::toFeatureToggleDto).collect(Collectors.toSet());
@@ -92,7 +93,9 @@ public class FeatureToggleService implements FeatureToggleServiceInterface {
                 .build();
     }
 
-    @Override public FeatureToggleDto findById(String technicalName) throws FeatureToggleServiceException {
+    @Override
+    @Transactional
+    public FeatureToggleDto findById(String technicalName) throws FeatureToggleServiceException {
         FeatureToggleEntity byTechnicalName = featureToggleRepository.findByTechnicalName(technicalName)
                 .orElseThrow(() -> new FeatureToggleServiceException("Feature not found"));
         return toFeatureToggleDto(byTechnicalName);

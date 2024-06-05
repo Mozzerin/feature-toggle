@@ -23,12 +23,12 @@ import static com.mmozhzhe.featuretoggle.exception.ErrorCodes.SEARCH_REQUEST_FAI
 @Slf4j
 public class CustomerWebService {
 
-    @Value("${feature-toggle.maxFeatureRequestSize}")
-    private Integer maxFeatureRequestSize;
+    private final Integer maxFeatureRequestSize;
 
     private final CustomerServiceInterface customerServiceInterface;
 
-    public CustomerWebService(CustomerServiceInterface customerServiceInterface) {
+    public CustomerWebService(CustomerServiceInterface customerServiceInterface, @Value("${feature-toggle.maxFeatureRequestSize}") Integer maxFeatureRequestSize) {
+        this.maxFeatureRequestSize = maxFeatureRequestSize;
         this.customerServiceInterface = customerServiceInterface;
     }
 

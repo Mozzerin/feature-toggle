@@ -12,13 +12,14 @@ dependencies {
     implementation project(':feature-toggle-sdk')
     implementation project(':feature-toggle-service')
     implementation 'org.springframework.boot:spring-boot-starter-web'
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-
-    implementation "com.h2database:h2:${h2Version}"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+    testImplementation 'org.mockito:mockito-core:5.12.0'
+    testImplementation "com.h2database:h2:${h2Version}"
 }
 
 tasks.named('test') {

@@ -41,6 +41,7 @@ public class FeatureToggleReleaseEntity {
 
     @OneToMany
     @JoinColumn(name = "VERSIONID", referencedColumnName = "VERSIONNAME")
+    @Builder.Default
     private Set<FeatureToggleEntity> featureToggles = new HashSet<>();
 
     @ColumnDefault("CURRENT_TIMESTAMP")

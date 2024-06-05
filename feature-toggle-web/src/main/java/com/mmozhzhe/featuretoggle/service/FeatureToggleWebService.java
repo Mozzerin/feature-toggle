@@ -23,12 +23,12 @@ import static com.mmozhzhe.featuretoggle.exception.ErrorCodes.NOT_FOUND;
 @Slf4j
 public class FeatureToggleWebService {
 
-    @Value("${feature-toggle.maxArchiveSize}")
-    private Integer maxArchiveSize;
+    private final Integer maxArchiveSize;
 
     private final FeatureToggleServiceInterface featureToggleServiceInterface;
 
-    public FeatureToggleWebService(FeatureToggleServiceInterface featureToggleServiceInterface) {
+    public FeatureToggleWebService(FeatureToggleServiceInterface featureToggleServiceInterface, @Value("${feature-toggle.maxArchiveSize}") Integer maxArchiveSize) {
+        this.maxArchiveSize = maxArchiveSize;
         this.featureToggleServiceInterface = featureToggleServiceInterface;
     }
 
