@@ -8,6 +8,10 @@ Service to store and process feature flags storing and managing with UI and rest
 - Release feature toggle(only for admin role)
 - Search feature toggles by customer
 
+## Tips
+To perform any action as admin -> add Role=admin to localstorage(it's simulator of auth)
+To activate feature user with admin role has to release it
+
 ## Technical description:
 multi module project
 Java 17 + Spring Boot 3 + gradle 8.7 + H2 file db - backend
@@ -31,6 +35,7 @@ FE:
 2. Add redux to frontend to avoid extra calls
 3. Test coverage for frontend
 4. Batch updates on frontend
+5. Add search by customer to frontend
 
 BE: 
 1. Create separate service from module "feature-toggle-service"
