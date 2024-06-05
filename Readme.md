@@ -29,6 +29,7 @@ There is 2 options how to start solution:
   - ./gradlew clean build 
   - java -Dspring.profiles.active=qa -jar feature-toggle-web/build/libs/feature-toggle-web-1.0.0-SNAPSHOT.jar
 
+http://localhost:8080/feature-toggle/
 It will open react ui on 3000 port and backend on 8080 on localhost
 
 
