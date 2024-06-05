@@ -36,7 +36,7 @@ FE:
 3. Test coverage for frontend
 4. Batch updates on frontend
 5. Add search by customer to frontend
-6. Host server
+6. Host in static files of java server
 
 BE: 
 1. Create separate service from module "feature-toggle-service"

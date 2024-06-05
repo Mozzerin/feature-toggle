@@ -3,7 +3,7 @@ import {Link, useNavigate, useParams} from 'react-router-dom';
 import {Button, Container, Form, FormGroup, Input, Label} from 'reactstrap';
 import AppNavbar from '../../component/AppNavbar';
 import {Release} from "../../types/types";
-import {ADMIN_ROLE, ROLE_HEADER} from "../../types/conts";
+import {ROLE_HEADER} from "../../types/conts";
 
 const ReleasesAdd: React.FC = () => {
     const navigate = useNavigate();

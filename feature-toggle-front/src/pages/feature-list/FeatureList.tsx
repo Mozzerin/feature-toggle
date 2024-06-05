@@ -40,20 +40,6 @@ class FeatureList extends Component<{}, FeatureListState> {
         });
     }
 
-    async release(technicalName: string) {
-        await fetch(`/api/v1/operations/features/release`, {
-            method: 'PUT',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(new Array(technicalName))
-        }).then(() => {
-            let updatedToggles = this.state.featureToggles.filter(i => i.technical_name !== technicalName);
-            this.setState({featureToggles: updatedToggles});
-        });
-    }
-
     render() {
         const {featureToggles, isLoading} = this.state;
 
