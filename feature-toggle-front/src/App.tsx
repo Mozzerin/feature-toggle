@@ -10,10 +10,10 @@ function App() {
     return (
         <Router>
             <Routes>
-                <Route path='/' element={<Home/>}/>
-                <Route path='/features' element={<FeatureList/>}/>
-                <Route path='/features/:technical_name' element={<FeatureToggleEdit/>}/>
-                <Route path='/releases' element={<ReleasesAdd/>}/>
+                <Route path='/feature-toggle' element={<Home/>}/>
+                <Route path='/feature-toggle/features' element={<FeatureList/>}/>
+                <Route path='/feature-toggle/features/:technical_name' element={<FeatureToggleEdit/>}/>
+                <Route path='/feature-toggle/releases' element={<ReleasesAdd/>}/>
             </Routes>
         </Router>
     );

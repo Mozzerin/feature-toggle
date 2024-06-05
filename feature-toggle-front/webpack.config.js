@@ -1,27 +1,44 @@
-const path = require("path");
+const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+
 module.exports = {
-    entry: "./src/index.tsx", // Entry point of your application
+    entry: './src/index',
     output: {
-        filename: "bundle.js", // Output bundle file name
-        path: path.resolve(__dirname, "dist"), // Output directory
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, '../feature-toggle-web/src/main/resources/static')
+    },
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js']
     },
     module: {
         rules: [
             {
-                test: /\.(js|jsx)$/,
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
+            },
+            {
+                test: /\.(ts|tsx)$/,
                 exclude: /node_modules/,
                 use: {
-                    loader: "babel-loader",
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    },
                 },
-            },
-        ],
+            }
+        ]
     },
-    resolve: {
-        extensions: [".js", ".jsx"],
-    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './public/index.html'
+        })
+    ],
     devServer: {
-        contentBase: path.join(__dirname, "public"), // Serve files from this directory
-        port: 3000, // Port for the development server
-        open: true, // Open the default web browser when the server starts
-    },
+        host: 'localhost', // where to run
+        historyApiFallback: true,
+        port: 3000, //given port to exec. app
+        open: true,  // open new tab
+        hot: true // Enable webpack's Hot Module Replacement
+    }
 };

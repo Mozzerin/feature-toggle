@@ -72,9 +72,9 @@ public class FeatureToggleWebService {
         }
     }
 
-    public PaginationFeaturesWeb findAll(int pageNo, int pageSize) {
+    public PaginationFeaturesWeb findAll(int pageNo, int pageSize, String role) {
         log.info("Find all Feature toggles with pageNo : {}, pageSize : {}", pageNo, pageSize);
-        PaginationFeatures page = featureToggleServiceInterface.findAll(pageNo, pageSize);
+        PaginationFeatures page = featureToggleServiceInterface.findAll(pageNo, pageSize, role);
         Set<FeatureToggleWeb> toggleWebs = page.getFeatureToggles().stream()
                 .map(FeatureToggleWebService::toFeatureToggleWeb)
                 .collect(Collectors.toSet());

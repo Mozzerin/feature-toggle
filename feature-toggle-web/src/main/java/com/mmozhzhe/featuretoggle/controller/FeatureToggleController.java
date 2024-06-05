@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,9 +50,10 @@ public class FeatureToggleController {
     @GetMapping
     public ResponseEntity<PaginationFeaturesWeb> findAllFeatures(
             @RequestParam(defaultValue = "0") int pageNo,
-            @RequestParam(defaultValue = "10") int pageSize) {
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestHeader(name = "Role", required = false) String role) {
         log.info("Find all features");
-        PaginationFeaturesWeb result = featureToggleService.findAll(pageNo, pageSize);
+        PaginationFeaturesWeb result = featureToggleService.findAll(pageNo, pageSize, role);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 

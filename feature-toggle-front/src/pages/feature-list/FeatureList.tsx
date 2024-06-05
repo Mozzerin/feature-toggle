@@ -21,13 +21,21 @@ class FeatureList extends Component<{}, FeatureListState> {
     }
 
     componentDidMount() {
-        fetch('/api/v1/features?pageNo=0&pageSize=100')
+        fetch('/feature-toggle/api/v1/features?pageNo=0&pageSize=100', {
+            method: 'GET',
+            headers: {
+                'Role': localStorage.getItem(ROLE_HEADER) || '""'
+            }
+        })
             .then(response => response.json())
-            .then(data => this.setState({featureToggles: data.feature_toggles, isLoading: false}));
+            .then(data => this.setState({
+                featureToggles: data.feature_toggles,
+                isLoading: false
+            }));
     }
 
     async archive(technicalName: string) {
-        await fetch(`/api/v1/operations/features/archive`, {
+        await fetch(`/feature-toggle/api/v1/operations/features/archive`, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
@@ -35,7 +43,10 @@ class FeatureList extends Component<{}, FeatureListState> {
             },
             body: JSON.stringify(new Array(technicalName))
         }).then(() => {
-            let updatedToggles = this.state.featureToggles.filter(i => i.technical_name !== technicalName);
+
+            let updatedToggles = localStorage.getItem(ROLE_HEADER) === ADMIN_ROLE
+                ? this.state.featureToggles.filter(i => i.technical_name !== technicalName)
+                : this.state.featureToggles;
             this.setState({featureToggles: updatedToggles});
         });
     }
@@ -60,7 +71,7 @@ class FeatureList extends Component<{}, FeatureListState> {
                 <td>
                     <ButtonGroup>
                         <Button size="sm" color="primary" tag={Link}
-                                to={"/features/" + featureToggle.technical_name}>Edit</Button>
+                                to={"/feature-toggle/features/" + featureToggle.technical_name}>Edit</Button>
                         <Button size="sm" color="danger"
                                 onClick={() => this.archive(featureToggle.technical_name)}>Archive</Button>
                     </ButtonGroup>
@@ -73,7 +84,7 @@ class FeatureList extends Component<{}, FeatureListState> {
                 <AppNavbar/>
                 <Container fluid>
                     <div>
-                        <Button color="success" tag={Link} to="/features/new">Add feature toggle</Button>
+                        <Button color="success" tag={Link} to="/feature-toggle/features/new">Add feature toggle</Button>
                     </div>
                     <h3>Feature toggles</h3>
                     <Table className="mt-4">

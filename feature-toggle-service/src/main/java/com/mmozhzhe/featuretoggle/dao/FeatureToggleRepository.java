@@ -1,6 +1,8 @@
 package com.mmozhzhe.featuretoggle.dao;
 
 import com.mmozhzhe.featuretoggle.dao.entity.FeatureToggleEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,5 +15,7 @@ public interface FeatureToggleRepository extends JpaRepository<FeatureToggleEnti
     Optional<FeatureToggleEntity> findByTechnicalName(String technicalId);
 
     Set<FeatureToggleEntity> findByTechnicalNameIn(Set<String> technicalNames);
+
+    Page<FeatureToggleEntity> findByArchived(boolean archived, Pageable pageable);
 
 }

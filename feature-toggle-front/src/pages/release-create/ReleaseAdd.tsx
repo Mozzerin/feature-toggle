@@ -29,7 +29,7 @@ const ReleasesAdd: React.FC = () => {
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        await fetch('/api/v1/operations/features/release', {
+        await fetch('/feature-toggle/api/v1/operations/features/release', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -38,7 +38,7 @@ const ReleasesAdd: React.FC = () => {
             },
             body: JSON.stringify(item),
         });
-        navigate('/features');
+        navigate('/feature-toggle/features');
     };
 
     const title = <h2>Create new release</h2>;

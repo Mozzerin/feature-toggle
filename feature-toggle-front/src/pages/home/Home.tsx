@@ -11,8 +11,8 @@ class Home extends Component<{}, {}> {
                 <AppNavbar/>
                 <Container fluid>
                     <Button color="link">
-                        <Link to="/features">Features</Link><br></br>
-                        {localStorage.getItem(ROLE_HEADER) === ADMIN_ROLE && <Link to="/releases">Releases</Link>}
+                        <Link to="/feature-toggle/features">Features</Link><br></br>
+                        {localStorage.getItem(ROLE_HEADER) === ADMIN_ROLE && <Link to="/feature-toggle/releases">Releases</Link>}
                     </Button>
                 </Container>
             </div>

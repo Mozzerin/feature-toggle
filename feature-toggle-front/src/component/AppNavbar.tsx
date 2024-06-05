@@ -22,7 +22,7 @@ export default class AppNavbar extends Component<{}, AppNavbarState> {
     render() {
         return (
             <Navbar color="dark" dark expand="md">
-                <NavbarBrand tag={Link} to="/">Home</NavbarBrand>
+                <NavbarBrand tag={Link} to="/feature-toggle">Home</NavbarBrand>
             </Navbar>
         );
     }

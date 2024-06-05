@@ -82,9 +82,15 @@ public class FeatureToggleService implements FeatureToggleServiceInterface {
 
     @Override
     @Transactional
-    public PaginationFeatures findAll(int pageNo, int pageSize) {
+    public PaginationFeatures findAll(int pageNo, int pageSize, String role) {
         PageRequest pageRequest = PageRequest.of(pageNo, pageSize);
-        Page<FeatureToggleEntity> page = featureToggleRepository.findAll(pageRequest);
+        Page<FeatureToggleEntity> page;
+        if ("admin".equals(role)) {
+            log.info("Find all feature toggles for admin");
+            page = featureToggleRepository.findAll(pageRequest);
+        } else {
+            page = featureToggleRepository.findByArchived(false, pageRequest);
+        }
         Set<FeatureToggleDto> featureToggleDtos = page.stream().map(FeatureToggleService::toFeatureToggleDto).collect(Collectors.toSet());
         return PaginationFeatures.builder()
                 .featureToggles(featureToggleDtos)
