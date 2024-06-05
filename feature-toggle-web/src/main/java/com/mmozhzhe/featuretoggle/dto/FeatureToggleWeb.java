@@ -2,6 +2,9 @@ package com.mmozhzhe.featuretoggle.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,9 +26,11 @@ public class FeatureToggleWeb {
     private String displayName;
 
     @JsonProperty(value = "technical_name", required = true)
+    @NotBlank(message = "technical name cannot be blank")
     private String technicalName;
 
     @JsonProperty(value = "description")
+    @Size(max = 256, message = "Description is limited with 256 chars")
     private String description;
 
     @JsonProperty(value = "expires_on")
@@ -41,6 +46,7 @@ public class FeatureToggleWeb {
     private boolean isArchived;
 
     @JsonProperty(value = "version_id", required = true)
+    @NotBlank(message = "technical name cannot be blank")
     private String versionId;
 
     @JsonProperty(value = "customer_ids")

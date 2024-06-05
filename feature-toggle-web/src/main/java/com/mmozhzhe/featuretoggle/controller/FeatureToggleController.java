@@ -34,7 +34,7 @@ public class FeatureToggleController {
     private final CustomerWebService customerWebService;
 
     @PostMapping
-    public ResponseEntity<FeatureToggleWeb> saveFeatureToggle(@RequestBody FeatureToggleWeb featureToggle) {
+    public ResponseEntity<FeatureToggleWeb> saveFeatureToggle(@Validated @RequestBody FeatureToggleWeb featureToggle) {
         log.info("New feature toggle save request received for feature toggle with name: {}", featureToggle.getTechnicalName());
         FeatureToggleWeb newFeatureToggle = featureToggleService.createNewFeatureToggle(featureToggle);
         return new ResponseEntity(newFeatureToggle, HttpStatus.CREATED);
