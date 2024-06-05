@@ -46,7 +46,6 @@ public class FeatureToggleWeb {
     private boolean isArchived;
 
     @JsonProperty(value = "version_id", required = true)
-    @NotBlank(message = "technical name cannot be blank")
     private String versionId;
 
     @JsonProperty(value = "customer_ids")
