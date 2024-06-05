@@ -27,6 +27,7 @@ It will open react ui on 3000 port and backend on 8080 on localhost
 ## To be done
 FE:
 1. Webpack + babel for frontend
+2. oauth 2.0
 2. Add redux to frontend to avoid extra calls
 3. Test coverage for frontend
 4. Batch updates on frontend
@@ -34,3 +35,4 @@ FE:
 BE: 
 1. Create separate service from module "feature-toggle-service"
 2. Improve test coverage
+3. oauth 2.0
