@@ -4,10 +4,11 @@ import {Button, Container, Form, FormGroup, Input, Label} from 'reactstrap';
 import AppNavbar from '../../component/AppNavbar';
 import {FeatureToggle} from '../../types/types';
 import withRouter from '../../component/WithRouter';
+import {ROLE_HEADER} from "../../types/conts";
 
 interface Props {
     navigate: NavigateFunction;
-    params: Params<string>;
+    params: Params;
 }
 
 interface State {
@@ -17,8 +18,6 @@ interface State {
 class FeatureToggleEdit extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
-
-        const {technical_name} = props.params;
 
         this.state = {
             item: {
@@ -39,8 +38,6 @@ class FeatureToggleEdit extends Component<Props, State> {
 
     componentDidMount() {
         const {technical_name} = this.props.params;
-        console.log("mmozhzhe");
-        console.log(technical_name);
         if (technical_name && technical_name !== 'new') {
             this.fetchData(technical_name);
         }
@@ -60,9 +57,8 @@ class FeatureToggleEdit extends Component<Props, State> {
                 item: {...prevState.item, [name]: customer_ids}
             }));
         } else if (name === 'inverted' || name === 'archived') {
-            const checked = event.target.checked;
             this.setState(prevState => ({
-                item: {...prevState.item, [name]: checked}
+                item: {...prevState.item, [name]: event.target.checked}
             }));
         } else {
             this.setState(prevState => ({
@@ -75,8 +71,8 @@ class FeatureToggleEdit extends Component<Props, State> {
         event.preventDefault();
         const {item} = this.state;
         const {navigate} = this.props;
-        await fetch('/feature-toggle/api/v1/features' + (item.technical_name==='new' ? '/' + item.technical_name : ''), {
-            method: item.technical_name!=='new' ? 'POST' : 'PUT',
+        await fetch('/feature-toggle/api/v1/features' + (item.technical_name === 'new' ? '/' + item.technical_name : ''), {
+            method: item.technical_name !== 'new' ? 'POST' : 'PUT',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -88,13 +84,12 @@ class FeatureToggleEdit extends Component<Props, State> {
 
     render() {
         const {item} = this.state;
-        const title = <h2>{item.technical_name ? 'Edit feature toggle' : 'Add feature toggle'}</h2>;
 
         return (
             <div>
                 <AppNavbar/>
                 <Container>
-                    {title}
+                    <h2>{item.technical_name ? 'Edit feature toggle' : 'Add feature toggle'}</h2>
                     <Form onSubmit={this.handleSubmit}>
                         <FormGroup>
                             <Label for="display_name">Display Name</Label>
@@ -121,11 +116,13 @@ class FeatureToggleEdit extends Component<Props, State> {
                             <Input type="checkbox" name="inverted" id="inverted" checked={item.inverted}
                                    onChange={this.handleChange} autoComplete="inverted"/>
                         </FormGroup>
-                        <FormGroup>
-                            <Label for="archived">Archived</Label>
-                            <Input type="checkbox" name="archived" id="archived" checked={item.archived}
-                                   onChange={this.handleChange} autoComplete="archived"/>
-                        </FormGroup>
+                        {
+                            localStorage.getItem(ROLE_HEADER) && <FormGroup>
+                                <Label for="archived">Archived</Label>
+                                <Input type="checkbox" name="archived" id="archived" checked={item.archived}
+                                       onChange={this.handleChange} autoComplete="archived"/>
+                            </FormGroup>
+                        }
                         <FormGroup>
                             <Label for="customer_ids">Customer ids</Label>
                             <Input type="text" name="customer_ids" id="customer_ids" value={item.customer_ids.join(',') || ''}

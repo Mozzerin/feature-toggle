@@ -45,8 +45,13 @@ class FeatureList extends Component<{}, FeatureListState> {
         }).then(() => {
 
             let updatedToggles = localStorage.getItem(ROLE_HEADER) === ADMIN_ROLE
-                ? this.state.featureToggles.filter(i => i.technical_name !== technicalName)
-                : this.state.featureToggles;
+                ? this.state.featureToggles
+                    .map(
+                        featureToggle => featureToggle.technical_name === technicalName
+                            ? {...featureToggle, archived: true}
+                            : featureToggle
+                    )
+                : this.state.featureToggles.filter(i => i.technical_name !== technicalName);
             this.setState({featureToggles: updatedToggles});
         });
     }
