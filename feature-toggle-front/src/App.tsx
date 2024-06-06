@@ -12,7 +12,8 @@ function App() {
             <Routes>
                 <Route path='/feature-toggle' element={<Home/>}/>
                 <Route path='/feature-toggle/features' element={<FeatureList/>}/>
-                <Route path='/feature-toggle/features/:technical_name' element={<FeatureToggleEdit/>}/>
+                <Route path='/feature-toggle/features/feature/:technical_name' element={<FeatureToggleEdit/>}/>
+                <Route path='/feature-toggle/features/feature' element={<FeatureToggleEdit/>}/>
                 <Route path='/feature-toggle/releases' element={<ReleasesAdd/>}/>
             </Routes>
         </Router>

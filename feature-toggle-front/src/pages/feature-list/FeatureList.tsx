@@ -72,11 +72,11 @@ class FeatureList extends Component<{}, FeatureListState> {
                 <td>{featureToggle.inverted ? 'True' : 'False'}</td>
                 <td>{featureToggle.version_id}</td>
                 <td>{featureToggle.archived ? 'Yes' : 'No'}</td>
-                <td>{featureToggle.customer_ids.toString()}</td>
+                <td>{featureToggle.customer_ids ? featureToggle.customer_ids.toString() : ''}</td>
                 <td>
                     <ButtonGroup>
                         <Button size="sm" color="primary" tag={Link}
-                                to={"/feature-toggle/features/" + featureToggle.technical_name}>Edit</Button>
+                                to={"/feature-toggle/features/feature/" + featureToggle.technical_name}>Edit</Button>
                         <Button size="sm" color="danger"
                                 onClick={() => this.archive(featureToggle.technical_name)}>Archive</Button>
                     </ButtonGroup>
@@ -89,7 +89,7 @@ class FeatureList extends Component<{}, FeatureListState> {
                 <AppNavbar/>
                 <Container fluid>
                     <div>
-                        <Button color="success" tag={Link} to="/feature-toggle/features/new">Add feature toggle</Button>
+                        <Button color="success" tag={Link} to="/feature-toggle/features/feature">Add feature toggle</Button>
                     </div>
                     <h3>Feature toggles</h3>
                     <Table className="mt-4">

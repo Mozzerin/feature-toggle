@@ -6,7 +6,8 @@ module.exports = {
     entry: './src/index',
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, '../feature-toggle-web/src/main/resources/static')
+        path: path.resolve(__dirname, '../feature-toggle-web/src/main/resources/static'),
+        publicPath: '/feature-toggle/'
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js']

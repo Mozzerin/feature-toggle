@@ -72,3 +72,55 @@ Content-Type: application/json
 GET http://localhost:8080/feature-toggle/api/v1/features?pageNo=0&pageSize=10
 
 Content-Type: application/json
+
+
+###
+
+# curl 'http://localhost:8080/feature-toggle/api/v1/features/sadsadsad'
+#  -X 'PUT'
+#  -H 'Accept: application/json'
+#  -H 'Accept-Language: en,ru;q=0.9,en-US;q=0.8,ru-RU;q=0.7,de;q=0.6'
+#  -H 'Connection: keep-alive'
+#  -H 'Content-Type: application/json'
+#  -H 'Cookie: userty.core.p.aca821=__2VySWQiOiIzNWY5MDkzZjYyZjhhYmM1N2Y5NDcwYWUzMWY5YTU2NSJ9eyJ1c; _ga_FF32QJYVDE=GS1.1.1696496189.3.0.1696496189.0.0.0; Idea-b81574f3=b3fc9fcd-2d1d-4b92-828d-9e03259a2747'
+#  -H 'Origin: http://localhost:8080'
+#  -H 'Referer: http://localhost:8080/feature-toggle/features/feature/sadsadsad'
+#  -H 'Sec-Fetch-Dest: empty'
+#  -H 'Sec-Fetch-Mode: cors'
+#  -H 'Sec-Fetch-Site: same-origin'
+#  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
+#  -H 'sec-ch-ua: "Google Chrome";v="125", "Chromium";v="125", "Not.A/Brand";v="24"'
+#  -H 'sec-ch-ua-mobile: ?0'
+#  -H 'sec-ch-ua-platform: "macOS"'
+#  --data-raw '{"display_name":"sadasd","technical_name":"sadsadsad","description":"sadsad","expires_on":"2024-06-19T03:30:00","inverted":false,"released":false,"archived":true,"version_id":null,"customer_ids":"16,12,12"}'
+PUT http://localhost:8080/feature-toggle/api/v1/features/sadsadsad
+Accept: application/json
+Accept-Language: en,ru;q=0.9,en-US;q=0.8,ru-RU;q=0.7,de;q=0.6
+Connection: keep-alive
+Cookie: userty.core.p.aca821=__2VySWQiOiIzNWY5MDkzZjYyZjhhYmM1N2Y5NDcwYWUzMWY5YTU2NSJ9eyJ1c; _ga_FF32QJYVDE=GS1.1.1696496189.3.0.1696496189.0.0.0; Idea-b81574f3=b3fc9fcd-2d1d-4b92-828d-9e03259a2747
+Origin: http://localhost:8080
+Referer: http://localhost:8080/feature-toggle/features/feature/sadsadsad
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36
+sec-ch-ua: "Google Chrome";v="125", "Chromium";v="125", "Not.A/Brand";v="24"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "macOS"
+Content-Type: application/json
+
+{
+  "display_name": "sadasd",
+  "technical_name": "sadsadsad",
+  "description": "sadsad",
+  "expires_on": "2024-06-19T03:30:00",
+  "inverted": false,
+  "released": false,
+  "archived": true,
+  "version_id": null,
+  "customer_ids": ["16","12","12"]
+}
+
+###
+
+

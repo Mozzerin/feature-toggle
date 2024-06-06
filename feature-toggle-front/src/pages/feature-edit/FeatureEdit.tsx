@@ -38,7 +38,7 @@ class FeatureToggleEdit extends Component<Props, State> {
 
     componentDidMount() {
         const {technical_name} = this.props.params;
-        if (technical_name && technical_name !== 'new') {
+        if (technical_name) {
             this.fetchData(technical_name);
         }
     }
@@ -51,8 +51,14 @@ class FeatureToggleEdit extends Component<Props, State> {
 
     handleChange(event: ChangeEvent<HTMLInputElement>) {
         const {name, value} = event.target;
+        if (name === 'technical_name') {
+            const {technical_name} = this.props.params;
+            this.setState(prevState => ({
+                item: {...prevState.item, [name]: technical_name ? technical_name.toString() : value}
+            }));
+        }
         if (name === 'customer_ids') {
-            const customer_ids = value.split(",");
+            const customer_ids = value ? value.split(",") : [];
             this.setState(prevState => ({
                 item: {...prevState.item, [name]: customer_ids}
             }));
@@ -68,11 +74,12 @@ class FeatureToggleEdit extends Component<Props, State> {
     }
 
     async handleSubmit(event: FormEvent<HTMLFormElement>) {
+        const {technical_name} = this.props.params;
         event.preventDefault();
         const {item} = this.state;
         const {navigate} = this.props;
-        await fetch('/feature-toggle/api/v1/features' + (item.technical_name === 'new' ? '/' + item.technical_name : ''), {
-            method: item.technical_name !== 'new' ? 'POST' : 'PUT',
+        await fetch('/feature-toggle/api/v1/features' + (technical_name ? '/' + item.technical_name : ''), {
+            method: technical_name ? 'PUT' : 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -125,7 +132,8 @@ class FeatureToggleEdit extends Component<Props, State> {
                         }
                         <FormGroup>
                             <Label for="customer_ids">Customer ids</Label>
-                            <Input type="text" name="customer_ids" id="customer_ids" value={item.customer_ids.join(',') || ''}
+                            <Input type="text" name="customer_ids" id="customer_ids"
+                                   value={item.customer_ids ? item.customer_ids.join(',') : []}
                                    onChange={this.handleChange} autoComplete="customer_ids"/>
                         </FormGroup>
                         <FormGroup>

@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -83,7 +84,7 @@ public class FeatureToggleService implements FeatureToggleServiceInterface {
     @Override
     @Transactional
     public PaginationFeatures findAll(int pageNo, int pageSize, String role) {
-        PageRequest pageRequest = PageRequest.of(pageNo, pageSize);
+        PageRequest pageRequest = PageRequest.of(pageNo, pageSize, Sort.by("createdAt").descending());
         Page<FeatureToggleEntity> page;
         if ("admin".equals(role)) {
             log.info("Find all feature toggles for admin");
@@ -91,7 +92,7 @@ public class FeatureToggleService implements FeatureToggleServiceInterface {
         } else {
             page = featureToggleRepository.findByArchived(false, pageRequest);
         }
-        Set<FeatureToggleDto> featureToggleDtos = page.stream().map(FeatureToggleService::toFeatureToggleDto).collect(Collectors.toSet());
+        List<FeatureToggleDto> featureToggleDtos = page.stream().map(FeatureToggleService::toFeatureToggleDto).collect(Collectors.toList());
         return PaginationFeatures.builder()
                 .featureToggles(featureToggleDtos)
                 .totalPages(page.getTotalPages())

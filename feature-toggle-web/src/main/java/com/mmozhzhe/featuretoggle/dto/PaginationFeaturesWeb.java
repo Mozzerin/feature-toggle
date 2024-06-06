@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @Builder
@@ -20,7 +21,7 @@ import java.util.Set;
 public class PaginationFeaturesWeb {
 
     @JsonProperty(value = "feature_toggles")
-    private Set<FeatureToggleWeb> featureToggles;
+    private List<FeatureToggleWeb> featureToggles;
     @JsonProperty(value = "total_count")
     private long totalCount;
     @JsonProperty(value = "total_pages")

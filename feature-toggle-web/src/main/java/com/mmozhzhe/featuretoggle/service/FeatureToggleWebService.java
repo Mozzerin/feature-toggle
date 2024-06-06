@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -75,9 +76,9 @@ public class FeatureToggleWebService {
     public PaginationFeaturesWeb findAll(int pageNo, int pageSize, String role) {
         log.info("Find all Feature toggles with pageNo : {}, pageSize : {}", pageNo, pageSize);
         PaginationFeatures page = featureToggleServiceInterface.findAll(pageNo, pageSize, role);
-        Set<FeatureToggleWeb> toggleWebs = page.getFeatureToggles().stream()
+        List<FeatureToggleWeb> toggleWebs = page.getFeatureToggles().stream()
                 .map(FeatureToggleWebService::toFeatureToggleWeb)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
         return PaginationFeaturesWeb.builder()
                 .featureToggles(toggleWebs)
                 .totalCount(page.getTotalCount())

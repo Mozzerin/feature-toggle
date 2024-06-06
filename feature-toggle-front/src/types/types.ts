@@ -12,5 +12,5 @@ export interface FeatureToggle {
 export interface Release {
     version_id: string,
     description: string,
-    feature_toggle_names: string[]
+    feature_toggle_names: string[];
 }
